@@ -5,21 +5,28 @@ import React from 'react';
 
 export default function TabLayout() {
 return (
-  <Tabs
+ <Tabs
   screenOptions={{
     tabBarStyle: { display: 'none' }, // oculta el footer/tabBar
+    headerStyle: {
+      backgroundColor: "#5c6bc0", // 👉 azul menos intenso
+    },
+    headerTintColor: "#fff", // texto e íconos en blanco
+    headerTitleStyle: {
+      fontWeight: "600",
+    },
   }}
 >
   {/* Pantalla de inicio */}
   <Tabs.Screen 
     name="home" 
-    options={{ title: "Inicio", headerShown: true }} // sin header en inicio
+    options={{ title: "Inicio", headerShown: true }} 
   />
 
   {/* Otras pantallas */}
   <Tabs.Screen 
     name="profile" 
-    options={{ title: "Perfil", headerShown: true }} // header con botón de volver
+    options={{ title: "Perfil", headerShown: true }} 
   />
   <Tabs.Screen 
     name="rostrofacial" 
@@ -30,12 +37,10 @@ return (
     options={{ title: 'Marcaciones', headerShown: true }} 
   />
   <Tabs.Screen 
-  name="ubicacion" 
-  options={{
-    title: 'Ubicación',
-    headerShown: true,
-  }} 
-/>
+    name="ubicacion" 
+    options={{ title: 'Ubicación', headerShown: true }} 
+  />
 </Tabs>
+
   );
 }

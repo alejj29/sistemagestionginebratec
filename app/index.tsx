@@ -1,7 +1,8 @@
 import { loginService } from "@/src/services/authService";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -33,24 +34,39 @@ export default function LoginScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Bienvenido</Text>
+      <Text style={styles.subtitle}>Iniciar Sesión</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Usuario"
-        value={usuario}
-        onChangeText={setUsuario}
-      />
+      <View style={styles.inputContainer}>
+        <Ionicons name="person-outline" size={20} color="#777" style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="Usuario"
+          value={usuario}
+          onChangeText={setUsuario}
+          placeholderTextColor="#aaa"
+        />
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Contraseña"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <View style={styles.inputContainer}>
+        <Ionicons name="lock-closed-outline" size={20} color="#777" style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder="Contraseña"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          placeholderTextColor="#aaa"
+        />
+      </View>
 
-      <Button title={loading ? "Ingresando..." : "Iniciar Sesión"} onPress={handleLogin} />
+      <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={loading}>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+        )}
+      </TouchableOpacity>
     </View>
   );
 }
@@ -59,23 +75,54 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#fff",
+    padding: 24,
+    backgroundColor: "#f5f7fa",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 30,
+    color: "#3f51b5",
+    textAlign: "center",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#555",
+    textAlign: "center",
+    marginBottom: 24,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    elevation: 3, // sombra en Android
+    shadowColor: "#000", // sombra en iOS
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  inputIcon: {
+    marginRight: 8,
   },
   input: {
-    width: "100%",
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 10,
-    marginBottom: 20,
-    paddingHorizontal: 15,
+    flex: 1,
+    height: 48,
     fontSize: 16,
+    color: "#333",
+  },
+  loginButton: {
+    backgroundColor: "#3f51b5",
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  loginButtonText: {
+    color: "#fff",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 });
