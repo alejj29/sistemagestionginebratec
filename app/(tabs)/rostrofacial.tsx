@@ -2,7 +2,7 @@ import { uploadPhoto } from '@/src/services/photoService';
 import { Ionicons } from '@expo/vector-icons';
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import { useRef, useState } from 'react';
-import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function App() {
   const [facing, setFacing] = useState<CameraType>('back');
@@ -56,26 +56,31 @@ const takePhoto = async () => {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
-        {/* Cámara */}
-        <CameraView style={styles.camera} ref={cameraRef} facing={facing} />
+        {/* <Text style={styles.title}>📷 Captura de Rostro</Text> */}
 
-        {/* Botones solo iconos */}
+        {/* Cámara */}
+        <View style={styles.cameraWrapper}>
+          <CameraView style={styles.camera} ref={cameraRef} facing={facing} />
+        </View>
+
+        {/* Botones de acción */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={[styles.iconButton, styles.blue]} onPress={toggleCameraFacing}>
-            <Ionicons name="camera-reverse-outline" size={28} color="#fff" />
+            <Ionicons name="camera-reverse-outline" size={30} color="#fff" />
           </TouchableOpacity>
 
           <TouchableOpacity style={[styles.iconButton, styles.green]} onPress={takePhoto}>
-            <Ionicons name="camera-outline" size={28} color="#fff" />
+            <Ionicons name="camera-outline" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
 
         {/* Vista previa de la foto */}
         {photoUri && (
-          <View style={styles.previewContainer}>
+          <View style={styles.previewCard}>
+            <Text style={styles.previewTitle}>Vista Previa</Text>
             <Image source={{ uri: photoUri }} style={styles.previewImage} />
             <TouchableOpacity style={[styles.iconButton, styles.red]} onPress={clearPhoto}>
-              <Ionicons name="trash-outline" size={24} color="#fff" />
+              <Ionicons name="trash-outline" size={22} color="#fff" />
             </TouchableOpacity>
           </View>
         )}
@@ -86,51 +91,70 @@ const takePhoto = async () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingVertical: 20,
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: "#f9f9f9",
+    alignItems: "center",
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: "600",
+    marginBottom: 15,
+    color: "#333",
+  },
+  cameraWrapper: {
+    width: "100%",
+    height: 300,
+    borderRadius: 16,
+    overflow: "hidden",
+    marginBottom: 20,
   },
   camera: {
     flex: 1,
-    minHeight: 400,
-    marginBottom: 20,
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 20,
+    flexDirection: "row",
+    justifyContent: "center",
     marginBottom: 20,
   },
   iconButton: {
     width: 60,
     height: 60,
     borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
+    marginHorizontal: 15,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 4, // Android sombra
+    shadowColor: "#000", // iOS sombra
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
     shadowRadius: 4,
   },
-  blue: {
-    backgroundColor: '#2196F3',
+  blue: { backgroundColor: "#2b7cff" },
+  green: { backgroundColor: "#4caf50" },
+  red: { backgroundColor: "#ff6b6b" },
+  previewCard: {
+    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    padding: 15,
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
-  green: {
-    backgroundColor: '#4CAF50',
-  },
-  red: {
-    backgroundColor: '#F44336',
-  },
-  previewContainer: {
-    alignItems: 'center',
-    marginVertical: 10,
-    gap: 10,
+  previewTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginBottom: 10,
+    color: "#333",
   },
   previewImage: {
-    width: 150,
+    width: "100%",
     height: 200,
-    borderRadius: 10,
-    resizeMode: 'cover',
+    borderRadius: 12,
+    marginBottom: 10,
   },
 });
