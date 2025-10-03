@@ -29,10 +29,10 @@ export default function HomeScreen() {
       <Text style={styles.cardText}>Marcaciones</Text>
     </TouchableOpacity>
 
-    <TouchableOpacity style={styles.card}>
+    {/* <TouchableOpacity style={styles.card}>
       <Ionicons name="person-outline" size={40} color="#3f51b5" />
       <Text style={styles.cardText}>Perfil</Text>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
   </View>
 </ScrollView>
 
