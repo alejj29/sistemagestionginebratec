@@ -2,7 +2,16 @@ import { loginService } from "@/src/services/authService";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -10,8 +19,8 @@ export default function LoginScreen() {
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  
-   const handleLogin = async () => {
+
+  const handleLogin = async () => {
     if (!usuario || !password) {
       Alert.alert("Error", "Por favor, complete usuario y contraseña");
       return;
@@ -19,7 +28,7 @@ export default function LoginScreen() {
 
     setLoading(true);
     try {
-      console.log("usuario",usuario,"password",password)
+      console.log("usuario", usuario, "password", password);
       const data = await loginService(usuario, password);
       console.log("Respuesta del backend:", data);
 
@@ -31,14 +40,28 @@ export default function LoginScreen() {
     }
   };
 
-
   return (
     <View style={styles.container}>
+      {/* Imagen superior centrada */}
+      <View style={styles.imageContainer}>
+        <Image
+          source={require("../assets/images/ginebratec.jpg")}
+          style={styles.image}
+          resizeMode="contain"
+        />
+      </View>
+
       <Text style={styles.title}>Bienvenido</Text>
       <Text style={styles.subtitle}>Iniciar Sesión</Text>
 
+      {/* Input Usuario */}
       <View style={styles.inputContainer}>
-        <Ionicons name="person-outline" size={20} color="#777" style={styles.inputIcon} />
+        <Ionicons
+          name="person-outline"
+          size={20}
+          color="#777"
+          style={styles.inputIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Usuario"
@@ -48,8 +71,14 @@ export default function LoginScreen() {
         />
       </View>
 
+      {/* Input Contraseña */}
       <View style={styles.inputContainer}>
-        <Ionicons name="lock-closed-outline" size={20} color="#777" style={styles.inputIcon} />
+        <Ionicons
+          name="lock-closed-outline"
+          size={20}
+          color="#777"
+          style={styles.inputIcon}
+        />
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
@@ -60,11 +89,23 @@ export default function LoginScreen() {
         />
       </View>
 
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin} disabled={loading}>
+      <TouchableOpacity
+        style={styles.loginButton}
+        onPress={handleLogin}
+        disabled={loading}
+      >
         {loading ? (
           <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons
+              name="log-in-outline"
+              size={20}
+              color="#fff"
+              style={{ marginRight: 8 }}
+            />
+            <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+          </View>
         )}
       </TouchableOpacity>
     </View>
@@ -74,55 +115,68 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    padding: 24,
-    backgroundColor: "#f5f7fa",
+    backgroundColor: "#fff", // fondo blanco
+    alignItems: "center",
+    paddingHorizontal: 30,
+    paddingTop: 60,
+  },
+  imageContainer: {
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  image: {
+    width: 150,
+    height: 150,
   },
   title: {
     fontSize: 28,
-    fontWeight: "bold",
-    color: "#3f51b5",
-    textAlign: "center",
-    marginBottom: 8,
+    fontWeight: "700",
+    color: "#333",
   },
   subtitle: {
     fontSize: 16,
-    color: "#555",
-    textAlign: "center",
-    marginBottom: 24,
+    color: "#777",
+    marginBottom: 30,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    marginBottom: 16,
-    elevation: 3, // sombra en Android
-    shadowColor: "#000", // sombra en iOS
+    width: "100%",
+    backgroundColor: "#f0f0f0",
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    elevation: 2, // sombra sutil Android
+    shadowColor: "#000", // sombra iOS
     shadowOpacity: 0.1,
-    shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 4,
   },
   inputIcon: {
-    marginRight: 8,
+    marginRight: 10,
   },
   input: {
     flex: 1,
-    height: 48,
-    fontSize: 16,
+    height: 50,
     color: "#333",
   },
   loginButton: {
+    marginTop: 20,
+    width: "100%",
     backgroundColor: "#3f51b5",
-    borderRadius: 12,
-    paddingVertical: 14,
+    paddingVertical: 15,
+    borderRadius: 30,
     alignItems: "center",
-    marginTop: 10,
+    justifyContent: "center",
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
   },
   loginButtonText: {
     color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });

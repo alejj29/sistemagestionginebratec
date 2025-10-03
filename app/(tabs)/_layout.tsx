@@ -44,7 +44,7 @@ export default function TabLayout() {
             {user && (
               <View style={{ marginLeft: 8 }}>
                 <Text style={{ color: "#fff", fontWeight: "600" }}>{user.fullName}</Text>
-                <Text style={{ color: "#fff", fontSize: 12 }}>DNI: {user.docNumber}</Text>
+                <Text style={{ color: "#fff", fontSize: 12 }}>{user.docNumber}</Text>
               </View>
             )}
           </TouchableOpacity>
