@@ -1,8 +1,8 @@
 import axios from "axios";
 import { Platform } from "react-native";
 
-const API_URL = "http://192.168.1.52:4000/api";
-
+// const API_URL = "http://192.168.1.52:4000/api";
+const API_URL = "http://localhost:4000/api";
 export const uploadPhoto = async (file: any) => {
   try {
     const formData = new FormData();
